@@ -413,7 +413,7 @@ You can tail your application’s logs with the command rhc tail openshiftapp (t
 
 **Coach:** Discuss the value of application logging.
 
-## *4.*Create Idea scaffold
+## *4.*Create Touristic Places scaffold
 
 We're going to use Rails' scaffold functionality to generate a starting point that allows us to list, add, remove, edit, and view things; in our case "touristic places" in Galway.
 

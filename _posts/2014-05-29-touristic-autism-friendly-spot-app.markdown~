@@ -336,6 +336,7 @@ OpenShift uses the PostgreSQL database, which means that we need to add the pg g
     {% highlight sh %}
 gem 'sqlite3', :group => [:development, :test]
 gem 'pg', :group => [:production]
+gem 'rails_12factor', :group => [:production]
 {% endhighlight %}
   </div>
 Now do a bundle excluding the gems in production. 
