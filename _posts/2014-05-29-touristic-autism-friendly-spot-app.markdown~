@@ -1,0 +1,678 @@
+---
+layout: default
+title: Touristic Autism-friendly Spots App 
+permalink: app
+---
+
+# Rails Girls Touristic Autism-friendly Spots App Tutorial
+
+*Created by Myriam Leggieri, [@iammyr](https://twitter.com/iammyr)*
+*for [Rails Girls Galway](https://github.com/RailsGirlsGalway)*
+
+**Make sure you have Rails and Git installed.** [**Follow the installation guide**](/install), the [**Installing Git section of Pro Git**](http://www.git-scm.com/book/en/Getting-Started-Installing-Git) to get set up. Then configure GitHub by typing the following in your terminal:
+<div class="os-specific">
+  <div class="nix">
+{% highlight sh %}
+$ git config --global user.name "Your Name"
+$ git config --global user.email your.email@example.com
+{% endhighlight %}
+
+    <div>
+<p>one-time setup steps for GitHub.</p>
+    </div>
+Sign up for a [free GitHub account](https://github.com/signup/free) if you don’t have one already. 
+
+
+This guide merges, adapts and extends some of the basic RailsGirls guides **for the scenario**: visualization of touristic places in Galway (Ireland) that are autism-friendly. This application was requested by the [Galway Autism Partnership](http://www.galwayautismpartnership.com/). 
+
+The extension comprises of the following **new features**:
+<ul>
+<li>Version control with Git</li>
+<li>Continuous Deployment on OpenShift<li>
+<li>Unit Testing<li>
+<li>Google Places collection<li>
+<li>Google Places visualization in a Google Map<li>
+<li>Google Map visualization<li>
+<li>Google Map bookmarks customization.<li>
+</ul>
+
+The basic guides that have been merged and adapted are the [Ruby on Rails Tutorial](http://www.railstutorial.org/book), the [basic RailsGirls app](http://guides.railsgirls.com/app/) and the tutorials for [creating thumbnails](http://guides.railsgirls.com/thumbnails), [authenticating users](http://guides.railsgirls.com/devise/), [adding design](http://guides.railsgirls.com/design), [deploying to OpenShift](http://guides.railsgirls.com/openshift/) and [adding comments](http://guides.railsgirls.com/commenting).
+
+
+## Get to know the tools
+
+<div class="indent" markdown="1">
+
+<h3><i class="icon-text-editor">&nbsp;</i></h3>
+
+<h3>Text Editor</h3>
+
+<p><a href="http://www.sublimetext.com">Sublime Text</a>, <a href="http://www.activestate.com/komodo-edit">Komodo Edit</a>, Vim, Emacs, and Gedit are examples of text editors your can use for writing code and editing files.</p>
+
+<h3><i class="icon-prompt">&nbsp;</i></h3>
+
+<h3>Terminal (known as Command Prompt on Windows)</h3>
+Where you start the rails server and run commands.
+
+<h3><i class="icon-browser">&nbsp;</i></h3>
+
+<h3>Web browser</h3>
+(Firefox, Safari, Chrome) for viewing your application.
+
+<h3>GitHub</h3>
+[Slides - by Kevin Lyda @]()
+
+</div>
+
+### Important
+
+It is important that you select the instructions specific to your operating system - the commands you need to run on a Windows computer are slightly different to Mac or Linux. If you're having trouble check the Operating System switcher at the bottom of the commands.
+
+
+## *1.*Creating the application
+
+We're going to create a new Rails app called *railsgirls-galway-2014*.
+
+First, let's open a terminal:
+
+* Mac OS X: Open Spotlight, type *Terminal* and click the *Terminal* application.
+* Windows: Click Start and look for *Command Prompt*, then click *Command Prompt with Ruby on Rails*.
+* Linux (Ubuntu/Fedora): Search for *Terminal* on the dash and click *Terminal*.
+
+Next, type these commands in the terminal:
+
+<div class="os-specific">
+  <div class="nix">
+{% highlight sh %}
+mkdir projects
+{% endhighlight %}
+
+    <div>
+<p>You can verify that a directory named <code>projects</code> was created by running the list command: <code>ls</code>. You should see the <code>projects</code> directory in the output. Now you want to change the directory you are currently in to the <code>projects</code> folder by running:</p>
+    </div>
+
+{% highlight sh %}
+cd projects
+{% endhighlight %}
+
+    <div>
+<p>You can verify you are now in an empty directory or folder by again running the <code>ls</code> command. Now you want to create a new app called <code>railsgirls</code> by running:</p>
+    </div>
+
+{% highlight sh %}
+rails new railsgirls-galway-2014
+{% endhighlight %}
+
+    <div>
+<p>This will create a new app in the folder <code>railsgirls</code>, so we again want to change the directory to be inside of our rails app by running:</p>
+    </div>
+
+{% highlight sh %}
+rvm rubygems latest
+cd railsgirls
+{% endhighlight %}
+
+    <div>
+<p>If you run <code>ls</code> inside of the directory you should see folders such as <code>app</code> and <code>config</code>. You can then start the rails server by running:</p>
+    </div>
+
+{% highlight sh %}
+rails server
+{% endhighlight %}
+  </div>
+
+  <div class="win">
+{% highlight sh %}
+mkdir projects
+{% endhighlight %}
+
+    <div>
+<p>You can verify that a directory named <code>projects</code> was created by running the list command: <code>dir</code>. You should see the <code>projects</code> directory in the output. Now you want to change the directory you are currently in to the <code>projects</code> folder by running:</p>
+    </div>
+
+{% highlight sh %}
+cd projects
+{% endhighlight %}
+
+    <div>
+<p>You can verify you are now in an empty directory or folder by again running the <code>dir</code> command. Now you want to create a new app called <code>railsgirls</code> by running:</p>
+    </div>
+
+{% highlight sh %}
+rails new railsgirls-galway-2014
+{% endhighlight %}
+
+    <div>
+<p>This will create a new app in the folder <code>railsgirls</code>, so we again want to change the directory to be inside of our rails app by running:</p>
+    </div>
+
+{% highlight sh %}
+
+cd railsgirls
+{% endhighlight %}
+
+    <div>
+<p>If you run <code>dir</code> inside of the directory you should see folders such as <code>app</code> and <code>config</code>. You can then start the rails server by running:</p>
+    </div>
+
+{% highlight sh %}
+rails server
+{% endhighlight %}
+  </div>
+</div>
+
+Open [http://localhost:3000](http://localhost:3000) in your browser. You should see "Welcome aboard" page, which means that the generation of your new app worked correctly.
+
+Notice in this window the command prompt is not visible because you are now in the Rails server, the command prompt looks like this:
+
+<div class="os-specific">
+  <div class="nix">
+{% highlight sh %}
+$
+{% endhighlight %}
+  </div>
+  <div class="win">
+{% highlight sh %}
+>
+{% endhighlight %}
+  </div>
+</div>
+
+When the command prompt is not visible you cannot execute new commands. If you try running `cd` or another command it will not work. To return to the normal command prompt:
+
+Hit `CTRL-C` in the terminal to quit the server.
+
+**Coach:** Explain what each command does. 
+[What is a web application and a server - Slides by @]()
+The skeleteon generated by "rails new" reflects the [Model-View-Controller - Slides by @]() architectural pattern.
+
+## *2.*Version control with Git
+Navigate to the root directory of the first app and initialize a new repository:
+
+<div class="os-specific">
+  <div class="nix">
+    {% highlight sh %}
+      $ git init
+    {% endhighlight %}
+  </div>
+</div>
+
+Before adding the project to the repository, let's tell Git which files to ignore - because too frequently subject to changes - by listing them in the .gitignore file. The "rails new" command already create a .gitignore file but let's extend it with the following.
+
+<div class="os-specific">
+  <div class="nix">
+    {% highlight sh %}
+# Ignore other unneeded files.
+database.yml
+# Ignore Rails documentation files
+doc/
+# Ignore Vim and Emacs swap files
+*.swp
+*~
+.project
+# Ignore (for OS X users) the .DS_Store directories created by the Mac Finder application
+.DS_Store
+.idea
+.secret
+  {% endhighlight %}
+  </div>
+</div>
+
+Add the changes (recursively adding every sub-directory, too).
+<div class="os-specific">
+  <div class="nix">
+    {% highlight sh %}
+$ git commit -m "Initialize repository"
+  {% endhighlight %}
+  </div>
+</div>
+
+The "git add" command adds the project files to a staging area, which contains pending changes to your project; you can see which files are in the staging area using the status command:
+
+<div class="os-specific">
+  <div class="nix">
+    {% highlight sh %}
+$ git status
+  {% endhighlight %}
+  </div>
+</div>
+
+Now commit the changes while justifying them with a message:
+<div class="os-specific">
+  <div class="nix">
+    {% highlight sh %}
+$ git commit -m "Initialize repository"
+  {% endhighlight %}
+  </div>
+Git commits are local, recorded only on the machine on which the commits occur. You can view a list of all the commit messages with "git log" typing "q" to quit.
+</div>
+
+Now we want our changes to be pushed from our local machine to a remote repository.
+[Create a repository](http://github.com/new) called "railsgirls-galway-2014" and fill in the information. Do not to initialize the repository with a README file since "rails new" already created that automatically. 
+Push up your local changes to the remote repository as follows:
+
+<div class="os-specific">
+  <div class="nix">
+    {% highlight sh %}
+$ git remote add origin https://github.com/<username>/railsgirls-galway-2014.git
+$ git push -u origin master
+  {% endhighlight %}
+  </div>
+The result is a page at GitHub (for instance, [here's mine](https://github.com/iammyr/railsgirls-galway-2014)) for our application repository, which provides nice rendering, sharing functionalities and statistics: take a look by yourself at https://github.com/<your username>/railsgirls-galway-2014
+</div>
+
+**Coach:** Explain the branch-edit-commit-merge workflow on GitHub: modify the README file.
+([Slides by Myriam Leggieri @iammyr]())
+
+
+## *3.*Continuous Deployment
+
+We’re going to deploy our (still-empty) Rails application to production. Deploying early and often allows us to catch any deployment problems early in our development cycle or else there could be troubles during the integration phases.
+Several shared hosts, virtual private servers, full-service deployment companies and cloud deployment services all provide facilities that makes it very easy to deploy Rails applications.
+
+OpenShift is one of the cloud deployment services offering such facilities. It is a cloud computing Platform as a Service (PaaS) that makes it easy to deploy apps online. It is open source and written in Ruby.
+
+
+
+[Create an OpenShift Online account](https://openshift.redhat.com/app/account/new?web_user[promo_code]=railsgirls), which allows you to put three apps online for free. Once you are signed up, install the OpenShift RHC Client Tools by adding the rhc gem in the production environment. Add the following to the Gemfiile (which is written in Ruby ndr):
+
+<div class="os-specific">
+  <div class="nix">
+    {% highlight sh %}
+      group :production do
+        gem install rhc
+      end
+{% endhighlight %}
+  </div>
+If you are not using RVM or RailsInstaller then follow [this guide](https://www.openshift.com/developers/rhc-client-tools-install) (you may need to do "sudo gem install rhc").
+</div>
+
+Then run in the terminal:
+
+<div class="os-specific">
+  <div class="nix">
+    {% highlight sh %}
+  bundle install --without production
+  rhc setup
+{% endhighlight %}
+  </div>
+The --without production option prevents the local installation of any production gems. 
+
+If Bundler complains about a readline error, try adding gem ’rb-readline’ to your Gemfile.
+
+Because the only gems we’ve added are restricted to a production environment, right now this command doesn’t actually install any additional local gems, but it’s needed to update Gemfile.lock. Now, let's commit these changes to GitHub!
+</div>
+
+**Coach:** Explain the benefits of deploying to a PaaS such as OpenShift, as opposed to traditional servers. What "production" means. Discuss SSH and why we need to upload a public key to communicate securely.
+[Slides by Gerry Kavanagh @gerryk]()
+
+Navigate to the "projects" folder. Run in the prompt:
+
+<div class="os-specific">
+  <div class="nix">
+    {% highlight sh %}
+rhc app create openshiftapp ruby-1.9 postgresql-9.2 --from-code=https://github.com/openshift/rails-example.git
+{% endhighlight %}
+  </div>
+</div>
+
+We need the .openshift directory and config/database.yml file from the sample application in order for our Rails app to run on OpenShift. Copy these from the openshiftapp directory to the railsgirls directory.
+
+<div class="os-specific">
+  <div class="nix">
+    {% highlight sh %}
+cd railsgirls-galway-2014 
+cp -r ../openshiftapp/.openshift .
+cp ../openshiftapp/config/database.yml config
+{% endhighlight %}
+  </div>
+Now add and commit in Git the new changes!
+</div>
+
+OpenShift uses the PostgreSQL database, which means that we need to add the pg gem in the production environment to allow Rails to talk to Postgres. Note also the addition of the rails_12factor gem, which is used to serve static assets such as images and stylesheets. Substitute "gem sqlite" in Gemfile with the following:
+
+<div class="os-specific">
+  <div class="nix">
+    {% highlight sh %}
+gem 'sqlite3', :group => [:development, :test]
+gem 'pg', :group => [:production]
+{% endhighlight %}
+  </div>
+Now do a bundle excluding the gems in production. 
+
+On some platforms, this may generate platform-specific versions of your Gems that cause issues when you push your app to the cloud. To prevent this, open your Gemfile.lock file and check the versions of the ‘sqlite3’ and ‘pg’ Gems. If they have a platform-specific suffix, such as -x86-mingw32, remove this (eg. change pg (0.16.0-x86-mingw32) to pg (0.16.0) and sqlite3 (1.3.8-x86-mingw32) to sqlite3 (1.3.8)). Save and close the file, and run the above bundle command again before continuing.
+
+Add and commit your changes in Git
+</div>
+
+**Coach:** Talk about relational databases and the differences between SQLite and PostgreSQL.
+
+
+We are now ready to deploy the Rails Girls app to OpenShift. We need to tell our Git repository where to push the code. To get the location of your OpenShift code repository, run the following command, and copy the Git URL from the output.
+
+<div class="os-specific">
+  <div class="nix">
+    {% highlight sh %}
+       rhc app show openshiftapp
+{% endhighlight %}
+  </div>
+</div>
+
+Now run the following commands, replacing the SSH string with your Git URL. We are using ‘-f’ for force here because we are happy to wipe away the history of the current OpenShift repository, which contains the sample Rails app. When you are pushing future changes, you can just use ‘git push’.
+
+<div class="os-specific">
+  <div class="nix">
+    {% highlight sh %}
+git remote add openshift ssh://5387bff65973cadf3c000323@openshiftapp-railsgirlsgalway.rhcloud.com/~/git/openshiftapp.git/
+git push -f --set-upstream openshift master
+{% endhighlight %}
+  </div>
+Refresh the app in your browser to see the result.
+If the app fails to visualize (500 Internal Server Error) often (error from the rhc tail openshiftapp : "Missing `secret_key_base` for 'production' environment, set this value in `config/secrets.yml`") the following solves. 
+Get a secret with "rake secret" assign it to the environment variable 'SECRET_KEY_BASE' and export the variable to ~/.bash_profile.
+OpenShift (but also Heroku) needs to serve static assets like images and CSS:
+
+<div class="os-specific">
+  <div class="nix">
+    {% highlight sh %}
+$ rake assets:precompile
+$ git add .
+$ git commit -am "Add precompiled assets for OpenShift"
+git push -f --set-upstream openshift master
+{% endhighlight %}
+  </div>
+To be used only if OpenShift fails without it. We'll cover "rake" and "assets" later on.
+</div>
+</div>
+
+When we push a new version of the application, anything stored within OpenShift’s copy of the repo will be wiped to make way for the new files. This includes some log files and the images uploaded by users. To fix this, we can store these files in persistent directories on OpenShift instead; the filepaths of the locations we need are stored in environment variables.
+
+To change the location of the production log, open config/environments/production.rb. Beneath the comment line:
+
+<div class="os-specific">
+  <div class="nix">
+    {% highlight sh %}
+config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
+{% endhighlight %}
+  </div>
+</div>
+
+Add the line:
+
+<div class="os-specific">
+  <div class="nix">
+    {% highlight sh %}
+config.logger = ActiveSupport::Logger.new(File.join(ENV['OPENSHIFT_RUBY_LOG_DIR'], "production.log"))
+{% endhighlight %}
+  </div>
+Rails 3 users: Change ‘ActiveSupport::Logger’ to ‘ActiveSupport::BufferedLogger’.
+</div>
+
+You can tail your application’s logs with the command rhc tail openshiftapp (the output from the change you just made won’t show up until the new file has been committed and pushed to OpenShift).
+
+**Coach:** Discuss the value of application logging.
+
+## *4.*Create Idea scaffold
+
+We're going to use Rails' scaffold functionality to generate a starting point that allows us to list, add, remove, edit, and view things; in our case "touristic places" in Galway.
+
+**Coach:** What is Rails scaffolding? (Explain the command, the model name and related database table, naming conventions, attributes and types, etc.) What are migrations and why do you need them?
+
+{% highlight sh %}
+rails generate scaffold idea name:string description:text picture:string
+{% endhighlight %}
+
+The scaffold creates new files in your project directory, but to get it to work properly we need to run a couple of other commands to update our database and restart the server.
+
+<div class="os-specific">
+  <div class="nix">
+{% highlight sh %}
+bin/rake db:migrate
+rails server
+{% endhighlight %}
+  </div>
+
+  <div class="win">
+{% highlight sh %}
+ruby bin/rake db:migrate
+rails server
+{% endhighlight %}
+  </div>
+</div>
+
+Open [http://localhost:3000/ideas](http://localhost:3000/ideas) in your browser. Click around and test what you got by running these few command-line commands.
+
+Hit `CTRL-C` to quit the server again when you've clicked around a little.
+
+
+## *3.*Design
+
+**Coach:** Talk about the relationship between HTML and Rails. What part of views is HTML and what is Embedded Ruby (ERB)? What is MVC and how does this relate to it? (Models and controllers are responsible for generating the HTML views.)
+
+The app doesn't look very nice yet. Let's do something about that. We'll use the Twitter Bootstrap project to give us nicer styling really easily.
+
+Open `app/views/layouts/application.html.erb` in your text editor and above the line
+
+{% highlight erb %}
+<%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+{% endhighlight %}
+
+add
+
+{% highlight erb %}
+<link rel="stylesheet" href="//railsgirls.com/assets/bootstrap.css" />
+<link rel="stylesheet" href="//railsgirls.com/assets/bootstrap-theme.css" />
+{% endhighlight %}
+
+and replace
+
+{% highlight erb %}
+<%= yield %>
+{% endhighlight %}
+
+with
+
+{% highlight erb %}
+<div class="container">
+  <%= yield %>
+</div>
+{% endhighlight %}
+
+Let's also add a navigation bar and footer to the layout. In the same file, under `<body>` add
+
+{% highlight html %}
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">The Idea app</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/ideas">Ideas</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endhighlight %}
+
+and before `</body>` add
+
+{% highlight html %}
+<footer>
+  <div class="container">
+    Rails Girls 2014
+  </div>
+</footer>
+<script src="//railsgirls.com/assets/bootstrap.js"></script>
+{% endhighlight %}
+
+Now let's also change the styling of the ideas table. Open `app/assets/stylesheets/application.css` and at the bottom add
+
+{% highlight css %}
+body { padding-top: 100px; }
+footer { margin-top: 100px; }
+table, td, th { vertical-align: middle; border: none; }
+th { border-bottom: 1px solid #DDD; }
+{% endhighlight %}
+
+Now make sure you saved your files and refresh the browser to see what was changed. You can also change the HTML & CSS further.
+
+In case your Terminal shows you an error message that *sort of* implies there is something wrong with your JavaScript or CoffeeScript, install [nodejs](http://nodejs.org/download/). This issue should not appear when you've used the RailsInstaller (but when you've installed Rails via ```gem install rails```).
+
+**Coach:** Talk a little about CSS and layouts.
+
+
+## Step 4: Adding picture uploads
+
+We need to install a piece of software to let us upload files in Rails.
+
+Open `Gemfile` in the project directory using your text editor and under the line
+
+{% highlight ruby %}
+gem 'sqlite3'
+{% endhighlight %}
+
+add
+
+{% highlight ruby %}
+gem 'carrierwave'
+{% endhighlight %}
+
+**Coach:** Explain what libraries are and why they are useful. Describe what open source software is.
+
+In the terminal run:
+
+{% highlight sh %}
+bundle
+{% endhighlight %}
+
+Now we can generate the code for handling uploads. In the terminal run:
+
+{% highlight sh %}
+rails generate uploader Picture
+{% endhighlight %}
+
+At this point you need to **restart the Rails server process** in the terminal.
+
+Hit `CTRL-C` in the terminal to quit the server. Once it has stopped, you can press the up arrow to get to the last command entered, then hit enter to start the server again.
+
+This is needed for the app to load the added library.
+
+Open `app/models/idea.rb` and under the line
+
+{% highlight ruby %}
+class Idea < ActiveRecord::Base
+{% endhighlight %}
+
+add
+
+{% highlight ruby %}
+mount_uploader :picture, PictureUploader
+{% endhighlight %}
+
+Open `app/views/ideas/_form.html.erb` and change
+
+{% highlight erb %}
+<%= f.text_field :picture %>
+{% endhighlight %}
+
+to
+
+{% highlight erb %}
+<%= f.file_field :picture %>
+{% endhighlight %}
+
+Sometimes, you might get an *TypeError: can't cast ActionDispatch::Http::UploadedFile to string*.
+
+If this happens, in file `app/views/ideas/_form.html.erb` change the line
+
+{% highlight erb %}
+<%= form_for(@idea) do |f| %>
+{% endhighlight %}
+
+to
+
+{% highlight erb %}
+<%= form_for @idea, :html => {:multipart => true} do |f| %>
+{% endhighlight %}
+
+In your browser, add new idea with a picture. When you upload a picture it doesn't look nice because it only shows a path to the file, so let's fix that.
+
+Open `app/views/ideas/show.html.erb` and change
+
+{% highlight erb %}
+<%= @idea.picture %>
+{% endhighlight %}
+
+to
+
+{% highlight erb %}
+<%= image_tag(@idea.picture_url, :width => 600) if @idea.picture.present? %>
+{% endhighlight %}
+
+Now refresh your browser to see what changed.
+
+**Coach:** Talk a little about HTML.
+
+
+## Step 5: Finetune the routes
+
+If you try to open [http://localhost:3000](http://localhost:3000) it still shows the "Welcome aboard" page. Let's make it redirect to the ideas page.
+
+Open `config/routes.rb` and after the first line add
+
+{% highlight ruby %}
+root :to => redirect('/ideas')
+{% endhighlight %}
+
+Test the change by opening the root path (that is, http://localhost:3000/) in your browser.
+
+**Coach:** Talk about routes, and include details on the order of routes and their relation to static files.
+
+**Rails 3 users:** You will need to delete the index.html from the `/public/` folder for this to work.
+
+## Create static page in your app
+
+Lets add a static page to our app that will hold information about the author of this application — you!
+
+{% highlight sh %}
+rails generate controller pages info
+{% endhighlight %}
+
+This command will create you a new folder under `app/views` called `/pages` and under that a file called `info.html.erb` which will be your info page.
+
+It also adds a new simple route to your routes.rb.
+
+{% highlight ruby %}
+get "pages/info"
+{% endhighlight %}
+
+Now you can open the file `app/views/pages/info.html.erb` and add information about you in HTML and then take your browser to [http://localhost:3000/pages/info](http://localhost:3000/pages/info) to see your new info page.
+
+## What next?
+
+* Add design using HTML &amp; CSS
+* Add ratings
+* Use CoffeeScript (or JavaScript) to add interaction
+* Add picture resizing to make loading the pictures faster
+
+
+## Additional Guides
+
+* Guide 0: [Handy cheatsheet for Ruby, Rails, console etc.](https://github.com/PragTob/rails-beginner-cheatsheet)
+* Guide 1: [Add commenting by Janika Liiv](/commenting)
+* Guide 2: [Put your app online with Heroku by Terence Lee](/heroku) / [Put your app online with OpenShift by Katie Miller](/openshift) / [Put your app online with Ninefold](/ninefold) / [Put your app online with Shelly Cloud](/shellycloud) / [Put your app online with anynines](/anynines) / [Put your app online with Trucker.io](/trucker)
+* Guide 3: [Create thumbnail images for the uploads by Miha Filej](/thumbnails)
+* Guide 4: [Add design using HTML &amp; CSS by Alex Liao](/design)
+* Guide 5: [Add Authentication (user accounts) with Devise by Piotr Steininger](/devise/)
+* Guide 6: [Adding profile pictures with Gravatar](/gravatar)
+* Guide 7: [Test your app with RSpec](/testing-rspec)
+* Guide 8: [Continuous Deployment with Travis-CI](/continuous-travis) / Continuous Deployment with Codeship](/continuous)
+* Guide 9: [Go through additional explanations for the App by Lucy Bain](https://github.com/lbain/railsgirls)
+
