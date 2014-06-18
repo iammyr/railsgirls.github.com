@@ -45,17 +45,18 @@ Sign up for a [free GitHub account](https://github.com/signup/free) if you donâ€
 
 ### [*2.*Version control with Git](/_posts/2014-05-29-touristic-autism_git.markdown)
 
-### [*3.*Static Pages and Testing](/_posts/2014-05-29-touristic-autism_static-pages-tdd.markdown)
+### [*3.*Dynamic Pages - Resource Modeling](/_posts/2014-05-29-touristic-autism_resource-modeling.markdown)
 
-### [*4.*Dynamic Pages - Resource Modeling](/_posts/2014-05-29-touristic-autism_resource-modeling.markdown)
+### [*4.*Continuous Deployment](/_posts/2014-05-29-touristic-autism_continuous-deployment.markdown)
 
-### [*5.*Continuous Deployment](/_posts/2014-05-29-touristic-autism_continuous-deployment.markdown)
+### [*5.*Design](/_posts/2014-05-29-touristic-autism_design.markdown)
 
-### [*6.*Design](/_posts/2014-05-29-touristic-autism_design.markdown)
+### [*6.*Image upload and Thumbnails](/_posts/2014-05-29-touristic-autism_image-upload.markdown)
 
-### [*7.*Image upload and Thumbnails](/_posts/2014-05-29-touristic-autism_image-upload.markdown)
+### [*7.*Show All Places in a Google Map](/_posts/2014-05-29-touristic-autism_google-map.markdown)
 
-### [*8.*Show All Places in a Google Map](/_posts/2014-05-29-touristic-autism_google-map.markdown)
+Optional - for advanced participants
+### [*8.*Static Pages and Testing](/_posts/2014-05-29-touristic-autism_static-pages-tdd.markdown)
 
 
 To-Do: add tests and deploying reminders at the end of each step.
