@@ -41,21 +41,21 @@ $ git config --global user.email your.email@example.com
 Sign up for a [free GitHub account](https://github.com/signup/free) if you don’t have one already. 
 
 
-### [*1.*Basic Web Application](/touristic-autism_basic-app)
+### [*1.*Basic Web Application](/_posts/2014-05-29-touristic-autism_basic-app.markdown)
 
-### [*2.*Version control with Git](/touristic-autism_git)
+### [*2.*Version control with Git](/_posts/2014-05-29-touristic-autism_git.markdown)
 
-### [*3.*Static Pages and Testing](/touristic-autism_static-pages-tdd)
+### [*3.*Static Pages and Testing](/_posts/2014-05-29-touristic-autism_static-pages-tdd.markdown)
 
-### [*4.*Dynamic Pages - Resource Modeling](/touristic-autism_resource-modeling)
+### [*4.*Dynamic Pages - Resource Modeling](/_posts/2014-05-29-touristic-autism_resource-modeling.markdown)
 
-### [*5.*Continuous Deployment](/touristic-autism_continuous-deployment)
+### [*5.*Continuous Deployment](/_posts/2014-05-29-touristic-autism_continuous-deployment.markdown)
 
-### [*6.*Design](/touristic-autism_design)
+### [*6.*Design](/_posts/2014-05-29-touristic-autism_design.markdown)
 
-### [*7.*Image upload and Thumbnails](/touristic-autism_image-upload)
+### [*7.*Image upload and Thumbnails](/_posts/2014-05-29-touristic-autism_image-upload.markdown)
 
-### [*8.*Show All Places in a Google Map](/touristic-autism_google-map)
+### [*8.*Show All Places in a Google Map](/_posts/2014-05-29-touristic-autism_google-map.markdown)
 
 
 To-Do: add tests and deploying reminders at the end of each step.
