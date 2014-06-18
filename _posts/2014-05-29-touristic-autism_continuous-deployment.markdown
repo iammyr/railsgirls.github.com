@@ -1,10 +1,10 @@
 ---
 layout: default
 title: Touristic Autism-friendly Spots App 
-permalink: touristic-autism-friendly-spot-app-4
+permalink: touristic-autism_continuous-deployment
 ---
 
-# Continuous Deployment with OpenShift
+# Continuous Deployment
 
 *Created by Myriam Leggieri, [@iammyr](https://twitter.com/iammyr)*
 *for [Rails Girls Galway](https://github.com/RailsGirlsGalway)*

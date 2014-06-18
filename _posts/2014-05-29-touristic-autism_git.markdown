@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Touristic Autism-friendly Spots App 
-permalink: touristic-autism-friendly-spot-app-2
+permalink: touristic-autism_git
 ---
 
 # Version Control with Git
@@ -46,7 +46,7 @@ Add the changes (recursively adding every sub-directory, too).
 <div class="os-specific">
   <div class="nix">
     {% highlight sh %}
-$ git commit -m "Initialize repository"
+$ git commit -am "Initialize repository"
   {% endhighlight %}
   </div>
 </div>
@@ -85,6 +85,6 @@ $ git push -u origin master
 The result is a page at GitHub (for instance, [here's mine](https://github.com/iammyr/railsgirls-galway-2014)) for our application repository, which provides nice rendering, sharing functionalities and statistics: take a look by yourself at https://github.com/<your username>/railsgirls-galway-2014
 </div>
 
-**Coach:** Explain the branch-edit-commit-merge workflow on GitHub: modify the README file.
+**Coach:** Explain the branch-edit-commit-merge workflow on GitHub: modify the README file to be more descriptive.
 ([Slides by Myriam Leggieri @iammyr]())
 

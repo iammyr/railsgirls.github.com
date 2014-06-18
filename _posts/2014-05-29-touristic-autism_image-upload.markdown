@@ -1,10 +1,10 @@
 ---
 layout: default
 title: Touristic Autism-friendly Spots App 
-permalink: touristic-autism-friendly-spot-app-3
+permalink: touristic-autism_image-upload
 ---
 
-# Resource Modeling
+# Image Upload and Thumbnails
 
 *Created by Myriam Leggieri, [@iammyr](https://twitter.com/iammyr)*
 *for [Rails Girls Galway](https://github.com/RailsGirlsGalway)*

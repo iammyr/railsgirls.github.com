@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Touristic Autism-friendly Spots App 
-permalink: touristic-autism-friendly-spot-app-3
+permalink: touristic-autism_resource-modeling
 ---
 
 # Resource Modeling
@@ -59,6 +59,11 @@ Look at the server logging and explain it as a report of the following interacti
 * The view uses embedded Ruby to render the page as HTML.
 * The controller passes the HTML back to the browser
 
+Note that the controller created is RESTful (explain)
+
+Note that the controller inherits abilities (large amount of functionality, such as the ability to manipulate model objects, filter inbound HTTP requests, and render views as HTML) from its ApplicationController super-class (ref. MVC).
+([Slides by Keith Cortis @kcortis]())
+
 Let's add-commit-push to your GitHub repo! See how nicely all the changes are now on your GitHub profile? :)
 
 ## Authenticated Tourists/Users
@@ -115,7 +120,7 @@ Open up `app/views/ideas/show.html.erb` and remove the line that says:
 <p id="notice"><%= notice %></p>
 {% endhighlight %}
 
-Do the same for `app/views/comments/show.html.erb`. These lines are not necessary as we've put the notice in the `app/views/layouts/application.html.erb` file.
+This line is not necessary as we've put the notice in the `app/views/layouts/application.html.erb` file.
 
 ## Step 3: Setup the User model
 
@@ -125,8 +130,7 @@ We'll use a bundled generator script to create the User model.
    rake db:migrate
 {% endhighlight %}
 
-**Coach:** Explain what user model has been generated. What are the
-fields?
+**Coach:** Explain what user model has been generated. What are the fields? Note that a model inherits abilities to interact with the DB from its ActiveRecord::Base super-class (ref. MVC). 
 
 ## Step 4: Create your first user
 
@@ -138,7 +142,7 @@ Make sure your rails server is running, open [http://localhost:3000/users/sign_u
 
 All we need to do now is to add appropriate links or notice about the user being logged in in the top right corner of the navigation bar.
 
-In order to do that, edit `app/views/layouts/application.html.erb` add:
+In order to do that, edit `app/views/layouts/application.html.erb` by adding at the beginning of the body:
 {% highlight erb %}
 <p class="navbar-text pull-right">
 <% if user_signed_in? %>
@@ -150,12 +154,7 @@ In order to do that, edit `app/views/layouts/application.html.erb` add:
   <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
 <% end %>
 {% endhighlight %}
-right after
-{% highlight erb %}
-<ul class="nav">
-  <li class="active"><a href="/ideas">Ideas</a></li>
-</ul>
-{% endhighlight %}
+
 
 Finally, force the user to redirect to the login page if the user was not logged in. Open up `app/controllers/application_controller.rb` and add:
 
@@ -178,14 +177,50 @@ In the same way as for the "place" resource, we can create a "place's review" re
 <div class="os-specific">
   <div class="nix">
 {% highlight sh %}
-rails generate scaffold review comment:text autism_friendly:integer
+rails generate scaffold review comment:text autism_friendly:integer user_id:integer place_id:integer
 bin/rake db:migrate
 {% endhighlight %}
   </div>
-Start the server, check out the new service in your browser, add-commit-push to github.
+Start the server, check out the new service in your browser. Then, add-commit-push to github.
 </div>
 
-## Relationship between our Resources
 
-One tourists can publish several reviews. One place can receive several reviews. One review has only one tourist as the author. 
-Let's represent these relationship in our app.
+**Coach:** show that the scaffold generator has updated the Rails routes file with a rule for the Review resource
+
+At the moment reviews, places and users are characterized by information that is never validated for its correctness. Still, for instance, there should be a limit on the length of comments in review or on the format of a user's email address.
+
+<div class="os-specific">
+  <div class="nix">
+{% highlight sh %}
+  has_many :reviews
+
+Then let's add a constraint over the length of the review's comment field (we'll use the 'validates' keyword).
+Open app/models/review.rb and add between 'class' and 'end':
+
+<div class="os-specific">
+  <div class="nix">
+{% highlight sh %}
+  validates :comment, length: { maximum: 140 }
+{% endhighlight %}
+  </div>
+If we now try to enter more than 140 characters we'll get an error. (try it out! ;) )
+</div>
+
+## Finetune the routes
+
+If you try to open [http://localhost:3000](http://localhost:3000) it still shows the "Welcome aboard" page. Let's make it redirect to the places page.
+
+Open `config/routes.rb` and after the first line add
+
+{% highlight ruby %}
+root :to => redirect('/places')
+{% endhighlight %}
+
+Test the change by opening the root path (that is, http://localhost:3000/) in your browser.
+
+**Coach:** Talk about routes, and include details on the order of routes and their relation to static files.
+
+**Rails 3 users:** You will need to delete the index.html from the `/public/` folder for this to work.
+
+
+

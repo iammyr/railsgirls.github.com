@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Touristic Autism-friendly Spots App 
-permalink: touristic-autism-friendly-spot-app-5
+permalink: touristic-autism_design
 ---
 
 # Design
