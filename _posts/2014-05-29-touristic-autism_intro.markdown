@@ -44,42 +44,27 @@ Sign up for a [free GitHub account](https://github.com/signup/free) if you donâ€
 
 ### [*3.*Resource Modeling](/_posts/2014-05-29-touristic-autism_resource-modeling.markdown)
 
-### [*4.*Continuous Deployment](/_posts/2014-05-29-touristic-autism_continuous-deployment.markdown)
+### [*4.*Resource Rating](/_posts/2014-05-29-touristic-autism_resource-rating.markdown)
 
-### [*5.*Resource Rating](/_posts/2014-05-29-touristic-autism_resource-rating.markdown)
+### [*5.*Design](/_posts/2014-05-29-touristic-autism_design.markdown)
 
-### [*6.*Design](/_posts/2014-05-29-touristic-autism_design.markdown)
-
-### [*7.*Image upload and Thumbnails](/_posts/2014-05-29-touristic-autism_image-upload.markdown)
+### [*6.*Image upload and Thumbnails](/_posts/2014-05-29-touristic-autism_image-upload.markdown)
 
 Optional - for advanced participants
-### [*8.*Static Pages and Testing](/_posts/2014-05-29-touristic-autism_static-pages-tdd.markdown)
+
+### [*7.*Continuous Deployment](/_posts/2014-05-29-touristic-autism_continuous-deployment.markdown)
+
+### [*8.*Continuous Testing and Integration](/_posts/2014-05-29-touristic-autism_static-pages-tdd.markdown)
 
 
-To-Do: add tests and deploying reminders at the end of each step.
-
-
-
-## What next?
-
-* Add design using HTML &amp; CSS
-* Add ratings
-* Use CoffeeScript (or JavaScript) to add interaction
-* Add picture resizing to make loading the pictures faster
 
 
 ## Additional Guides
 
 * Guide 0: [Handy cheatsheet for Ruby, Rails, console etc.](https://github.com/PragTob/rails-beginner-cheatsheet)
-* Guide 1: [Add commenting by Janika Liiv](/commenting)
-* Guide 2: [Put your app online with Heroku by Terence Lee](/heroku) / [Put your app online with OpenShift by Katie Miller](/openshift) / [Put your app online with Ninefold](/ninefold) / [Put your app online with Shelly Cloud](/shellycloud) / [Put your app online with anynines](/anynines) / [Put your app online with Trucker.io](/trucker)
-* Guide 3: [Create thumbnail images for the uploads by Miha Filej](/thumbnails)
-* Guide 4: [Add design using HTML &amp; CSS by Alex Liao](/design)
-* Guide 5: [Add Authentication (user accounts) with Devise by Piotr Steininger](/devise/)
-* Guide 6: [Adding profile pictures with Gravatar](/gravatar)
-* Guide 7: [Test your app with RSpec](/testing-rspec)
-* Guide 8: [Continuous Deployment with Travis-CI](/continuous-travis) / Continuous Deployment with Codeship](/continuous)
-* Guide 9: [Go through additional explanations for the App by Lucy Bain](https://github.com/lbain/railsgirls)
+* Guide 1: [Put your app online with Heroku by Terence Lee](/heroku) / [Put your app online with OpenShift by Katie Miller](/openshift) / [Put your app online with Ninefold](/ninefold) / [Put your app online with Shelly Cloud](/shellycloud) / [Put your app online with anynines](/anynines) / [Put your app online with Trucker.io](/trucker)
+* Guide 2: [Adding profile pictures with Gravatar](/gravatar)
+* Guide 3: [Go through additional explanations for the App by Lucy Bain](https://github.com/lbain/railsgirls)
 
 
 # Appendices
