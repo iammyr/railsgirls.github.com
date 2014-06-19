@@ -181,13 +181,13 @@ This line is not necessary as we've already put the authenticated user notice in
 
 Let's add-commit-push to your GitHub repo! 
 
-## Resource Associations
+### Resource Associations
 
 Note that places aren't yet properly associated with users. For instance, when creating a new place the field "User" is expected to be filled by ourselves and when viewing a user profile there isn't any list of places created by him/her and viceversa. Also, when deleting a user account all the places he/she created do not get deleted automatically. 
 
 Let's properly create the 1-to-many association between User and Places.
 
-### 1. Add 1-to-many association to User
+#### Step 1. Add 1-to-many association 
 
 You need to make sure that Rails knows the relation between the User and Place resources. 
 As one user can create many places we need to make sure the user model knows that. 
@@ -210,7 +210,7 @@ add the row
 belongs_to :user
 {% endhighlight %}
 
-## Step 3: Render the place form and existing places
+#### Step 2: Render the views
 
 Open app/views/places/_form.html and after
 {% highlight erb %}
@@ -233,7 +233,9 @@ next, remove
 </div>
 {% endhighlight %}
 
-## Step 4: Allow only the place creator to edit/delete a place
+## Step 3: Set edit/delete permissions
+
+Allow only the place creator to edit/delete a place.
 
 Open app/vies/places/index.html.erb and substitute
 
@@ -248,13 +250,10 @@ with
 
 {% highlight sh %}
  <% if user_signed_in? %>
-	  <% if current_user.id == place.user_id %></strong>.
+	  <% if current_user.id == place.user_id %>
 
 		<td><%= link_to 'Edit', edit_place_path(place) %></td>
 		<td><%= link_to 'Destroy', place, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-
-	    <% else %>
-		not equal!
 	    <% end %>
 	<% end %>
 {% endhighlight %}
@@ -264,14 +263,14 @@ That's it. Now view a user you have inserted to your application and there you s
 
 
 
-## Place's Review
+## Place's Comments
 
-In the same way as for the "place" resource, we can create a "place's review" resource.
+Just as well as we created a "place" resource and associated it with users, we can create a "comment" resource and associate it with places 9and with its author).
 
 <div class="os-specific">
   <div class="nix">
 {% highlight sh %}
-rails generate scaffold review comment:text autism_friendly:integer user_id:integer place_id:integer
+rails generate scaffold comment body:text user_id:integer place_id:integer
 bin/rake db:migrate
 {% endhighlight %}
   </div>
@@ -281,20 +280,132 @@ Start the server, check out the new service in your browser. Then, add-commit-pu
 
 **Coach:** show that the scaffold generator has updated the Rails routes file with a rule for the Review resource
 
-At the moment reviews, places and users are characterized by information that is never validated for its correctness. Still, for instance, there should be a limit on the length of comments in review or on the format of a user's email address.
+
+##Resource Association
+
+#### Step 1. Add 1-to-many association 
+
+Open app/models/place.rb and after the row
+{% highlight ruby %}
+belongs_to :user
+{% endhighlight %}
+add
+{% highlight ruby %}
+has_many :comments
+{% endhighlight %}
+
+Open app/models/comment.rb and after
+{% highlight ruby %}
+class Comment < ActiveRecord::Base
+{% endhighlight %}
+
+add the rows
+{% highlight ruby %}
+belongs_to :user
+belongs_to :place
+{% endhighlight %}
+
+#### Step 2: Render the views
+
+Open app/views/comments/_form.html and substitute
+{% highlight erb %}
+<div class="field">
+  <%= f.label :user_id %><br>
+  <%= f.number_field :user_id %>
+</div>
+{% endhighlight %}
+
+with the row
+{% highlight erb %}
+<%= f.hidden_field :user_id, :value => current_user.id %>
+{% endhighlight %}
+
+next, substitute
+{% highlight erb %}
+  <div class="field">
+    <%= f.label :place_id %><br>
+    <%= f.number_field :place_id %>
+  </div>
+{% endhighlight %}
+
+with the row
+{% highlight erb %}
+<%= f.hidden_field :place_id%>
+{% endhighlight %}
+
+
+
+
+
+Open app/views/places/show.html.erb and just before the bottom links add
+{% highlight erb %}
+<h3>Comments</h3>
+<% @comments.each do |comment| %>
+  <div>
+    <strong><%= comment.user_id %></strong>
+    <br />
+    <p><%= comment.body %></p>
+    <p><%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %></p>
+  </div>
+<% end %>
+<%= render 'comments/form' %>
+{% endhighlight %}
+
+In app/controllers/places_controller.rb add to show action after the row
+{% highlight ruby %}
+@place = Place.find(params[:id])
+{% endhighlight %}
+
+this
+{% highlight ruby %}
+@comments = @place.comments.all
+@comment = @place.comments.build
+{% endhighlight %}
+
+
+
+
+
+## Step 3: Set edit/delete permissions
+
+Allow only the comment creator to edit/delete a comment.
+
+Open app/views/places/show.html.erb and substitute
+
+
+{% highlight sh %}
+<p><%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %></p>
+{% endhighlight %}
+
+with
+
+
+{% highlight sh %}
+ <% if user_signed_in? %>
+	  <% if current_user.id == comment.user_id %>
+
+    <p><%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %></p>
+
+  <% end %>
+	<% end %>
+{% endhighlight %}
+
+
+
+
+
+## Resource Field Validation
+
+At the moment comments, places and users are characterized by information that is never validated for its correctness. Still, for instance, there should be a limit on the length of comments in review or on the format of a user's email address.
+
+
+Then let's add a constraint over the length of the comment's body field (we'll use the 'validates' keyword).
+Open app/models/comment.rb and add between 'class' and 'end':
 
 <div class="os-specific">
   <div class="nix">
 {% highlight sh %}
-  has_many :reviews
-
-Then let's add a constraint over the length of the review's comment field (we'll use the 'validates' keyword).
-Open app/models/review.rb and add between 'class' and 'end':
-
-<div class="os-specific">
-  <div class="nix">
-{% highlight sh %}
-  validates :comment, length: { maximum: 140 }
+  validates :body, length: { maximum: 140 }
 {% endhighlight %}
   </div>
 If we now try to enter more than 140 characters we'll get an error. (try it out! ;) )
