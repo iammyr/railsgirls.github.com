@@ -11,62 +11,17 @@ permalink: touristic-autism_resource-modeling
 The basic guides that have been merged and adapted are the [Ruby on Rails Tutorial](http://www.railstutorial.org/book), the [basic RailsGirls app](http://guides.railsgirls.com/app/) and the tutorials for [creating thumbnails](http://guides.railsgirls.com/thumbnails), [authenticating users](http://guides.railsgirls.com/devise/), [adding design](http://guides.railsgirls.com/design), [deploying to OpenShift](http://guides.railsgirls.com/openshift/) and [adding comments](http://guides.railsgirls.com/commenting).
 
 What do we want our app to do? As a first thing, we would like to 
-* create representations of touristic places and 
-* allow registered tourists to
-* review those places marking them as autism-friendly or not.
+* authenticate **users**
+* allow authenticated users to create a new touristic **place** description
+* allow authenticated users to **comment** those places
+* allow authenticated users to **rate** up to which extent those places are autism-friendly or not.
 
+Note that these requirements help us identify 4 different resources: user, place, comment, rating. We are now going to model them specifying their properties and their associations with each other.
 
-## Touristic Places
-
-We now use Rails' scaffold functionality to generate and set up all that is necessary to list, add, remove, edit, and view our first resource: "touristic places".
-
-<div class="os-specific">
-  <div class="nix">
-{% highlight sh %}
-rails generate scaffold place name:string address:string latitude:decimal longitude:decimal description:text picture:string
-{% endhighlight %}
-</div>
-</div>
-
-The scaffold creates new files in your project directory. However, we have defined (modeled) a "structure" for our "place" resource and we want all the future instances of this resource to stick to this structure and get stored somewhere, i.e., in a database. 
-We are already using a database (see `gem 'sqlite'` in your Gemfile). Let's add the structure of "place" as a table to our database with the following.
-
-<div class="os-specific">
-  <div class="nix">
-{% highlight sh %}
-bin/rake db:migrate
-{% endhighlight %}
-  </div>
-
-  <div class="win">
-{% highlight sh %}
-ruby bin/rake db:migrate
-{% endhighlight %}
-  </div>
-Then start the server again. Open [http://localhost:3000/places](http://localhost:3000/places) in your browser and check out all the new functionalities that our web application is now providing to handle "place" resources. All thanks to what Ruby on Rails automatically generates with `generate scaffold`.
-Each new instance of "place" that will be stored in the database, will be automatically assigned a unique identifier called "primary key", with no need for us to specify it as one of the fields (along with picture, name, etc.)
-</div>
-
-**Coach:** What is Rails scaffolding? What are migrations and why do you need them?
-Note the pages that have been created to manipulate the "place" resources and their naming convention.
-Look at the server logging and explain it as a report of the following interaction (in the context of the MVC pattern):
-* The browser issues a request for the /places URL.
-* Rails routes /places to the index action in the Places controller.
-* The index action asks the Place model to retrieve all places (Place.all).
-* The Place model pulls all the places from the database.
-* The Place model returns the list of places to the controller.
-* The controller captures the users in the @users variable, which is passed to the index view.
-* The view uses embedded Ruby to render the page as HTML.
-* The controller passes the HTML back to the browser
-
-Note that the controller created is RESTful (explain)
-
-Note that the controller inherits abilities (large amount of functionality, such as the ability to manipulate model objects, filter inbound HTTP requests, and render views as HTML) from its ApplicationController super-class (ref. MVC).
-([Slides by Keith Cortis @kcortis]())
-
-Let's add-commit-push to your GitHub repo! See how nicely all the changes are now on your GitHub profile? :)
 
 ## Authenticated Tourists/Users
+
+Let's generate our first resource: user and require its authentication.
 
 ## Step 0: Add devise gem
 
@@ -114,13 +69,7 @@ right above
    <%= yield %>
 {% endhighlight %}
 
-Open up `app/views/ideas/show.html.erb` and remove the line that says:
 
-{% highlight erb %}
-<p id="notice"><%= notice %></p>
-{% endhighlight %}
-
-This line is not necessary as we've put the notice in the `app/views/layouts/application.html.erb` file.
 
 ## Step 3: Setup the User model
 
@@ -152,7 +101,7 @@ In order to do that, edit `app/views/layouts/application.html.erb` by adding at 
 <% else %>
   <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
   <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
-<% end %>
+<% end %></p>
 {% endhighlight %}
 
 
@@ -167,6 +116,151 @@ after `protect_from_forgery with: :exception`.
 Open your browser and try logging in and out from.
 
 **Coach:** Talk about the `user_signed_in?` and `current_user` helpers. Why are they useful?
+
+Let's add-commit-push to your GitHub repo! See how nicely all the changes are now on your GitHub profile? :)
+
+## Touristic Places
+
+We now use Rails' scaffold functionality to generate and set up all that is necessary to list, add, remove, edit, and view our second resource: "touristic places".
+
+<div class="os-specific">
+  <div class="nix">
+{% highlight sh %}
+rails generate scaffold place name:string address:string latitude:decimal longitude:decimal description:text picture:string user_id:integer
+{% endhighlight %}
+</div>
+Note the column user:references that is created to support the 1-to-many association with Users.
+</div>
+
+The scaffold creates new files in your project directory. However, we have defined (modeled) a "structure" for our "place" resource and we want all the future instances of this resource to stick to this structure and get stored somewhere, i.e., in a database. 
+We are already using a database (see `gem 'sqlite'` in your Gemfile). Let's add the structure of "place" as a table to our database with the following.
+
+<div class="os-specific">
+  <div class="nix">
+{% highlight sh %}
+bin/rake db:migrate
+{% endhighlight %}
+  </div>
+
+  <div class="win">
+{% highlight sh %}
+ruby bin/rake db:migrate
+{% endhighlight %}
+  </div>
+
+
+Then start the server again. Open [http://localhost:3000/places](http://localhost:3000/places) in your browser and check out all the new functionalities that our web application is now providing to handle "place" resources. All thanks to what Ruby on Rails automatically generates with `generate scaffold`.
+Each new instance of "place" that will be stored in the database, will be automatically assigned a unique identifier called "primary key", with no need for us to specify it as one of the fields (along with picture, name, etc.)
+</div>
+
+
+**Coach:** What is Rails scaffolding? What are migrations and why do you need them?
+Note the pages that have been created to manipulate the "place" resources and their naming convention.
+Look at the server logging and explain it as a report of the following interaction (in the context of the MVC pattern):
+* The browser issues a request for the /places URL.
+* Rails routes /places to the index action in the Places controller.
+* The index action asks the Place model to retrieve all places (Place.all).
+* The Place model pulls all the places from the database.
+* The Place model returns the list of places to the controller.
+* The controller captures the users in the @users variable, which is passed to the index view.
+* The view uses embedded Ruby to render the page as HTML.
+* The controller passes the HTML back to the browser
+
+Note that the controller created is RESTful (explain)
+
+Note that the controller inherits abilities (large amount of functionality, such as the ability to manipulate model objects, filter inbound HTTP requests, and render views as HTML) from its ApplicationController super-class (ref. MVC).
+
+Open up `app/views/places/show.html.erb` and remove the line that says:
+
+{% highlight erb %}
+<p id="notice"><%= notice %></p>
+{% endhighlight %}
+
+This line is not necessary as we've already put the authenticated user notice in the `app/views/layouts/application.html.erb` file.
+
+
+Let's add-commit-push to your GitHub repo! 
+
+## Resource Associations
+
+Note that places aren't yet properly associated with users. For instance, when creating a new place the field "User" is expected to be filled by ourselves and when viewing a user profile there isn't any list of places created by him/her and viceversa. Also, when deleting a user account all the places he/she created do not get deleted automatically. 
+
+Let's properly create the 1-to-many association between User and Places.
+
+### 1. Add 1-to-many association to User
+
+You need to make sure that Rails knows the relation between the User and Place resources. 
+As one user can create many places we need to make sure the user model knows that. 
+Open app/models/user.rb and after the row
+{% highlight ruby %}
+class User < ActiveRecord::Base
+{% endhighlight %}
+add
+{% highlight ruby %}
+has_many :places
+{% endhighlight %}
+
+The place also has to know that it belongs to a user. So open app/models/place.rb and after
+{% highlight ruby %}
+class Place < ActiveRecord::Base
+{% endhighlight %}
+
+add the row
+{% highlight ruby %}
+belongs_to :user
+{% endhighlight %}
+
+## Step 3: Render the place form and existing places
+
+Open app/views/places/_form.html and after
+{% highlight erb %}
+<div class="field">
+  <%= f.label :user_id %><br>
+  <%= f.number_field :user_id %>
+</div>
+{% endhighlight %}
+
+add the row
+{% highlight erb %}
+<%= f.hidden_field :user_id, :value => current_user.id %>
+{% endhighlight %}
+
+next, remove
+{% highlight erb %}
+<div class="field">
+  <%= f.label :user_id %><br>
+  <%= f.number_field :user_id %>
+</div>
+{% endhighlight %}
+
+## Step 4: Allow only the place creator to edit/delete a place
+
+Open app/vies/places/index.html.erb and substitute
+
+
+{% highlight sh %}
+<td><%= link_to 'Edit', edit_place_path(place) %></td>
+		<td><%= link_to 'Destroy', place, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+{% endhighlight %}
+
+with
+
+
+{% highlight sh %}
+ <% if user_signed_in? %>
+	  <% if current_user.id == place.user_id %></strong>.
+
+		<td><%= link_to 'Edit', edit_place_path(place) %></td>
+		<td><%= link_to 'Destroy', place, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+	    <% else %>
+		not equal!
+	    <% end %>
+	<% end %>
+{% endhighlight %}
+
+That's it. Now view a user you have inserted to your application and there you should see the form for creating a place as well as deleting older places.
+
 
 
 

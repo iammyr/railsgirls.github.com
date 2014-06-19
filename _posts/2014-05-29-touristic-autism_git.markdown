@@ -46,12 +46,12 @@ Add the changes (recursively adding every sub-directory, too).
 <div class="os-specific">
   <div class="nix">
     {% highlight sh %}
-$ git commit -am "Initialize repository"
+git add . 
   {% endhighlight %}
   </div>
 </div>
 
-The "git add" command adds the project files to a staging area, which contains pending changes to your project; you can see which files are in the staging area using the status command:
+The "git add" command adds the project files to a staging area, which contains pending changes to your projectbu; you can see which files are in the staging area using the status command:
 
 <div class="os-specific">
   <div class="nix">

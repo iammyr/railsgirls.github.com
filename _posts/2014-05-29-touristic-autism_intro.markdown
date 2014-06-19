@@ -119,3 +119,15 @@ To go all the way back to the beginning, we can use
 
 As you might guess, substituting any other number for 0 migrates to that version number, where the version numbers come from listing the migrations sequentially.
 
+To drop a table from the db enter
+
+  $ rails console
+
+Then just type:
+
+  >> ActiveRecord::Migration.drop_table(:<table-name>)
+
+You can browse directly the database (if sqlite3 type ".quit" to exit afterwards) by typing
+
+  $ rails db
+
