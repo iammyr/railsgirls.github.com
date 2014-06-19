@@ -14,12 +14,9 @@ This guide merges, adapts and extends some of the basic RailsGirls guides **for 
 
 The extension comprises of the following **new features**:
 
-* Unit Testing
-* Google Places collection
-* Google Places visualization in a Google Map
-* Google Map visualization
-* Google Map bookmarks customization.
-
+* TDD using Guide
+* Resource Rating
+* Authenticated User (via devise) permission setting
 
 The basic guides that have been merged and adapted are the [Ruby on Rails Tutorial](http://www.railstutorial.org/book), the [basic RailsGirls app](http://guides.railsgirls.com/app/) and the tutorials for [creating thumbnails](http://guides.railsgirls.com/thumbnails), [authenticating users](http://guides.railsgirls.com/devise/), [adding design](http://guides.railsgirls.com/design), [deploying to OpenShift](http://guides.railsgirls.com/openshift/) and [adding comments](http://guides.railsgirls.com/commenting).
 
@@ -45,15 +42,15 @@ Sign up for a [free GitHub account](https://github.com/signup/free) if you donâ€
 
 ### [*2.*Version control with Git](/_posts/2014-05-29-touristic-autism_git.markdown)
 
-### [*3.*Dynamic Pages - Resource Modeling](/_posts/2014-05-29-touristic-autism_resource-modeling.markdown)
+### [*3.*Resource Modeling](/_posts/2014-05-29-touristic-autism_resource-modeling.markdown)
 
 ### [*4.*Continuous Deployment](/_posts/2014-05-29-touristic-autism_continuous-deployment.markdown)
 
-### [*5.*Design](/_posts/2014-05-29-touristic-autism_design.markdown)
+### [*5.*Resource Rating](/_posts/2014-05-29-touristic-autism_resource-rating.markdown)
 
-### [*6.*Image upload and Thumbnails](/_posts/2014-05-29-touristic-autism_image-upload.markdown)
+### [*6.*Design](/_posts/2014-05-29-touristic-autism_design.markdown)
 
-### [*7.*Show All Places in a Google Map](/_posts/2014-05-29-touristic-autism_google-map.markdown)
+### [*7.*Image upload and Thumbnails](/_posts/2014-05-29-touristic-autism_image-upload.markdown)
 
 Optional - for advanced participants
 ### [*8.*Static Pages and Testing](/_posts/2014-05-29-touristic-autism_static-pages-tdd.markdown)

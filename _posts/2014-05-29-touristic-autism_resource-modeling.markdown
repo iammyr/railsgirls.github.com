@@ -18,6 +18,8 @@ What do we want our app to do? As a first thing, we would like to
 
 Note that these requirements help us identify 4 different resources: user, place, comment, rating. We are now going to model them specifying their properties and their associations with each other.
 
+We will enable the rating in the next tutorial.
+
 
 ## Authenticated Tourists/Users
 
