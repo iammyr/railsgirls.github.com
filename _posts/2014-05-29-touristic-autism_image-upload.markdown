@@ -13,19 +13,12 @@ The basic guides that have been merged and adapted are the [Ruby on Rails Tutori
 
 We need to install a piece of software to let us upload files in Rails.
 
-Open `Gemfile` in the project directory using your text editor and under the line
-
-{% highlight ruby %}
-gem 'sqlite3'
-{% endhighlight %}
-
-add
+Open `Gemfile` in the project directory using your text editor and add
 
 {% highlight ruby %}
 gem 'carrierwave'
 {% endhighlight %}
 
-**Coach:** Explain what libraries are and why they are useful. Describe what open source software is.
 
 In the terminal run:
 
@@ -45,19 +38,13 @@ Hit `CTRL-C` in the terminal to quit the server. Once it has stopped, you can pr
 
 This is needed for the app to load the added library.
 
-Open `app/models/idea.rb` and under the line
-
-{% highlight ruby %}
-class Idea < ActiveRecord::Base
-{% endhighlight %}
-
-add
+Open `app/models/place.rb` and add
 
 {% highlight ruby %}
 mount_uploader :picture, PictureUploader
 {% endhighlight %}
 
-Open `app/views/ideas/_form.html.erb` and change
+Open `app/views/places/_form.html.erb` and change
 
 {% highlight erb %}
 <%= f.text_field :picture %>
@@ -71,30 +58,30 @@ to
 
 Sometimes, you might get an *TypeError: can't cast ActionDispatch::Http::UploadedFile to string*.
 
-If this happens, in file `app/views/ideas/_form.html.erb` change the line
+If this happens, in file `app/views/places/_form.html.erb` change the line
 
 {% highlight erb %}
-<%= form_for(@idea) do |f| %>
+<%= form_for(@place) do |f| %>
 {% endhighlight %}
 
 to
 
 {% highlight erb %}
-<%= form_for @idea, :html => {:multipart => true} do |f| %>
+<%= form_for @place, :html => {:multipart => true} do |f| %>
 {% endhighlight %}
 
-In your browser, add new idea with a picture. When you upload a picture it doesn't look nice because it only shows a path to the file, so let's fix that.
+Now if you run your server, and try adding a new place with a picture, you'll notice that the picture doesn't look nice because it only shows a path to the file. Let's fix that.
 
-Open `app/views/ideas/show.html.erb` and change
+Open `app/views/places/show.html.erb` and change
 
 {% highlight erb %}
-<%= @idea.picture %>
+<%= @place.picture %>
 {% endhighlight %}
 
 to
 
 {% highlight erb %}
-<%= image_tag(@idea.picture_url, :width => 600) if @idea.picture.present? %>
+<%= image_tag(@place.picture_url, :width => 600) if @place.picture.present? %>
 {% endhighlight %}
 
 Now refresh your browser to see what changed.
@@ -122,12 +109,6 @@ Open `Gemfile` in the project and add
 
 {% highlight ruby %}
 gem 'mini_magick', '3.5.0'
-{% endhighlight %}
-
-under the line
-
-{% highlight ruby %}
-gem 'carrierwave'
 {% endhighlight %}
 
 In the Terminal run:
@@ -158,21 +139,21 @@ end
 {% endhighlight %}
 
 The images uploaded from now on should be resized, but the ones we already
-have weren't affected. So edit one of the existing ideas and re-add a picture.
+have weren't affected. So edit one of the existing places and re-add a picture.
 
 ## Displaying the thumbnails
 
 To see if the uploaded picture was resized open
-`app/views/ideas/index.html.erb`. Change the line
+`app/views/places/index.html.erb`. Change the line
 
 {% highlight erb %}
-<td><%= idea.picture %></td>
+<td><%= place.picture %></td>
 {% endhighlight %}
 
 to
 
 {% highlight erb %}
-<td><%= image_tag idea.picture_url(:thumb) if idea.picture? %></td>
+<td><%= image_tag place.picture_url(:thumb) if place.picture? %></td>
 {% endhighlight %}
 
 Take a look at the list of ideas in the browser to see if the thumbnail is
